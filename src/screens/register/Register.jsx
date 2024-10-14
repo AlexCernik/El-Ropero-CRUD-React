@@ -25,7 +25,7 @@ const Register = () => {
       setRegistered(true);
       toast.success('Registro exitoso. Se ha enviado un correo de verificación.');
 
-      navigate('/signin');
+      
     } catch (e) {
       if (e?.response?.data) {
         let error = [];
