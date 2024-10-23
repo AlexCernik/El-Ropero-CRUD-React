@@ -3,11 +3,11 @@ import { useForm, Controller } from 'react-hook-form';
 import { Button, TextField, Grid, Typography } from '@mui/material';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [registered, setRegistered] = useState();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const { control, handleSubmit, formState: { errors, isSubmitting }, getValues, setError } = useForm({
     defaultValues: {
@@ -24,8 +24,6 @@ const Register = () => {
       await axios.post(`${process.env.REACT_APP_API_URL}/signup/`, data);
       setRegistered(true);
       toast.success('Registro exitoso. Se ha enviado un correo de verificación.');
-
-      
     } catch (e) {
       if (e?.response?.data) {
         let error = [];
@@ -35,6 +33,11 @@ const Register = () => {
             field: 'email',
             message: e.response.data.email
           });
+
+          // Mostrar un mensaje específico si el correo ya está registrado
+          if (e.response.data.email.includes('already exists')) {
+            toast.error('El correo electrónico ya está registrado. Intente con otro.');
+          }
         }
 
         if (e.response.data.password) {
@@ -50,7 +53,7 @@ const Register = () => {
 
         if (error.length > 0) {
           error.forEach(({ field, message }) =>
-            toast.error(message)
+            setError(field, { type: 'manual', message }) // Registrar errores en el formulario
           );
           return;
         }
