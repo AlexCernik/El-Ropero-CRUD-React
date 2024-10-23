@@ -18,7 +18,7 @@ const ProductSearchBar = ({ onSearchResults }) => {
     const fetchResults = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/products`, {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/product/search/?q=${ACA VA LA PALABRA A BUSCAR}`, {
           params: { search: query },
         });
         setResults(response.data);
