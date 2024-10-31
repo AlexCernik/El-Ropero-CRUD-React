@@ -1,16 +1,15 @@
-// ProductSearchBar.js
 import React, { useState, useEffect } from 'react';
-import { TextField, List, ListItem, Typography } from '@mui/material';
+import { List, ListItem, Typography, Box } from '@mui/material';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const ProductSearchBar = ({ onSearchResults }) => {
-  const [query, setQuery] = useState('');
-  const [loading, setLoading] = useState(false);
+const ProductSearchBar = ({ query, onSearchResults }) => {
   const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (query === '') {
+    // Si el query está vacío, limpiar los resultados
+    if (!query) {
       setResults([]);
       return;
     }
@@ -18,11 +17,9 @@ const ProductSearchBar = ({ onSearchResults }) => {
     const fetchResults = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/product/search/?q=${ACA VA LA PALABRA A BUSCAR}`, {
-          params: { search: query },
-        });
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/product/search/?q=${query}`);
         setResults(response.data);
-        onSearchResults(response.data); // Enviar los resultados al componente principal
+        onSearchResults(response.data);
       } catch (error) {
         toast.error('Error al buscar productos');
       } finally {
@@ -30,35 +27,28 @@ const ProductSearchBar = ({ onSearchResults }) => {
       }
     };
 
-    // Usar un temporizador para retrasar la búsqueda mientras el usuario escribe
     const timeoutId = setTimeout(fetchResults, 500);
-
-    // Limpiar el temporizador cuando el componente se desmonte o la consulta cambie
     return () => clearTimeout(timeoutId);
   }, [query, onSearchResults]);
 
   return (
-    <div className="product-search-bar">
-      <TextField
-        label="Buscar productos"
-        variant="outlined"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        fullWidth
-        margin="normal"
-      />
+    <Box>
       {loading ? (
         <Typography>Buscando...</Typography>
       ) : (
-        <List>
-          {results.map((product, index) => (
-            <ListItem key={index}>
-              <Typography variant="body1">{product.name}</Typography>
-            </ListItem>
-          ))}
-        </List>
+        results.length > 0 ? (
+          <List>
+            {results.map((product, index) => (
+              <ListItem key={index}>
+                <Typography variant="body1">{product.name}</Typography>
+              </ListItem>
+            ))}
+          </List>
+        ) : (
+          <Typography>No se encontraron productos.</Typography>
+        )
       )}
-    </div>
+    </Box>
   );
 };
 
