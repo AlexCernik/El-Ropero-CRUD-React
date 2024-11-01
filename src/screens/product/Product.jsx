@@ -42,8 +42,7 @@ const Product = () => {
   {/*Códiog que realizar una conexión a la API de la página para extraer los datos de un producto seleccionado*/}
   const getProduct = async () => {
     try {
-      const token = localStorage.getItem('@token');
-      const {data} = await axios.get(`${process.env.REACT_APP_API_URL}/product/${id}/`, { headers: { 'Authorization': `Token ${token}` } });
+      const {data} = await axios.get(`${process.env.REACT_APP_API_URL}/product/${id}/`);
       {/*Los datos se extraen por medio del id del producto seleccionado por el usuario desde la Card del Index. */}
       setState(data);
     } catch {
