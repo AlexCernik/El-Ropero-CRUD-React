@@ -32,9 +32,6 @@ const Cart = () => {
       console.log(data)
     } catch (e) {
       console.log(e.response.data)
-if(e.response.data.empty){
-setState(null)
-}
     }
   }
 
@@ -45,9 +42,6 @@ setState(null)
       setState(data);
     } catch (e) {
       console.log(e.response.data)
-if(e.response.data.empty){
-setState(null)
-}
     }
   };
 
@@ -58,9 +52,6 @@ setState(null)
       setState(data);
     } catch (e) {
       console.log(e.response.data)
-if(e.response.data.empty){
-setState(null)
-}
     };
   }
 
