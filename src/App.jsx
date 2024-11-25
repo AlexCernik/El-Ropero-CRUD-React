@@ -18,6 +18,7 @@ import SendResetPasswordEmail from './screens/resetPassword/SendResetPassword';
 import VerifyAccount from './screens/verifyAccount/VerifyAccount';
 import PurchaseList from './screens/purchaseList/PurchaseList';
 import PurchaseDetail from './screens/purchaseDetail/PurchaseDetail';
+import AddressForm from './screens/addressForm/AddressForm';
 
 const router = createBrowserRouter([
   {
@@ -75,16 +76,22 @@ const router = createBrowserRouter([
   },
 
   {
-  path: 'purchase-list',
-  element: <NormalRouter children={<PurchaseList />} />,
-  errorElement: <ErrorPage />
+    path: 'purchases',
+    element: <ProtectedRouter children={<PurchaseList />} redirectPath='/signin' />,
+    errorElement: <ErrorPage />
+  },
+  {
+    path: 'purchase/:id',
+    element: <ProtectedRouter children={<PurchaseDetail />} redirectPath='/signin' />,
+    errorElement: <ErrorPage />
   },
 
   {
-    path: 'purchase-detail',
-    element: <NormalRouter children={<PurchaseDetail />} />,
-    errorElement: <ErrorPage />
-    },
+    path: 'add-address',
+    element: <ProtectedRouter children={<AddressForm />} redirectPath='/signin' />,
+    errorElement: <ErrorPage />,
+  }
+  
 ]);
 
 const App = () => {
