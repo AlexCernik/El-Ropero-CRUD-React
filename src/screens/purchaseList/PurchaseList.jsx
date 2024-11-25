@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, List, ListItem, ListItemText, Typography, Box, Divider } from '@mui/material';
+import { Container, List, ListItem, ListItemText, Typography, Divider } from '@mui/material';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 

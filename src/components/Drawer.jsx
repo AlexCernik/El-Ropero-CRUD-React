@@ -56,7 +56,7 @@ const Drawer = () => {
         !!profile ?
           <>
             <List>
-              <ListItem component={Link} to='/add-address' disablePadding>
+              <ListItem component={Link} to='/address' disablePadding>
                 <ListItemButton>
                   <ListItemIcon style={{ minWidth: 40 }}>
                     <MapPin color='#1b1b1b' />

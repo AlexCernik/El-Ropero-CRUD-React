@@ -3,7 +3,7 @@ import { List, ListItem, Typography, Box } from '@mui/material';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const ProductSearchBar = ({ query, onSearchResults }) => {
+const ProductSearchBar = ({ query }) => {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -19,7 +19,6 @@ const ProductSearchBar = ({ query, onSearchResults }) => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/product/search/?q=${query}`);
         setResults(response.data);
-        onSearchResults(response.data);
       } catch (error) {
         toast.error('Error al buscar productos');
       } finally {
@@ -29,7 +28,7 @@ const ProductSearchBar = ({ query, onSearchResults }) => {
 
     const timeoutId = setTimeout(fetchResults, 500);
     return () => clearTimeout(timeoutId);
-  }, [query, onSearchResults]);
+  }, [query]);
 
   return (
     <Box>

@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, Typography, MenuItem } from '@mui/material';
 import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { setMain } from '../../redux/main';
 
 const AddressForm = () => {
+  const dispatch = useDispatch()
+  const address = useSelector(state => state.address);
+
   const [formData, setFormData] = useState({
-    province: '',
-    city: '',
-    postalCode: '',
-    street: '',
-    number: '',
+    province: address?.province || '',
+    city: address?.city || '',
+    zip_code: address?.zip_code || '',
+    street: address?.street || '',
+    number: address?.number || '',
+    phone: address?.phone || '',
+    detail: address?.detail || '',
   });
 
   const provinces = [
@@ -31,26 +38,32 @@ const AddressForm = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('@token');
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/user/address/`,
-        formData,
-        {
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-        }
-      );
-      console.log('Dirección guardada:', response.data);
+      if (address?.id) {
+        const res = await axios.put(
+          `${process.env.REACT_APP_API_URL}/address/${address.id}/`,
+          formData,
+          {
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          }
+        )
+        dispatch(setMain({ address: res.data }))
+      } else {
+        const res = await axios.post(
+          `${process.env.REACT_APP_API_URL}/address/`,
+          formData,
+          {
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          }
+        )
+        dispatch(setMain({ address: res.data }))
+      }
       alert('Dirección guardada exitosamente');
-      setFormData({
-        province: '',
-        city: '',
-        postalCode: '',
-        street: '',
-        number: '',
-      });
     } catch (error) {
-      console.error('Error al guardar la dirección:', error);
+      console.log('Error al guardar la dirección:', error, error.data);
       alert('Hubo un problema al guardar la dirección.');
     }
   };
@@ -68,7 +81,7 @@ const AddressForm = () => {
       }}
     >
       <Typography variant="h4" mb={2}>
-        Agregar Dirección
+        Mi Dirección
       </Typography>
       <form onSubmit={handleAddressSubmit}>
         <TextField
@@ -98,8 +111,8 @@ const AddressForm = () => {
         />
         <TextField
           label="Código Postal"
-          name="postalCode"
-          value={formData.postalCode}
+          name="zip_code"
+          value={formData.zip_code}
           onChange={handleInputChange}
           fullWidth
           margin="normal"
@@ -124,6 +137,26 @@ const AddressForm = () => {
           margin="normal"
           required
           type="number"
+        />
+        <TextField
+          label="Número de contacto"
+          name="phone"
+          value={formData.phone}
+          onChange={handleInputChange}
+          fullWidth
+          margin="normal"
+          required
+          type="number"
+        />
+        <TextField
+          label="Detalle de entrega"
+          name="detail"
+          placeholder='Casa blanca portón negro'
+          value={formData.detail}
+          onChange={handleInputChange}
+          fullWidth
+          margin="normal"
+          required
         />
         <Button
           type="submit"

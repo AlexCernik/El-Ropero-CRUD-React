@@ -13,10 +13,10 @@ import { MapPin, Search, ShoppingCart } from 'lucide-react';
 import Drawer from './Drawer';
 import ProductSearchBar from '../screens/productSearchBar/ProductSearchBar';
 import 'react-multi-carousel/lib/styles.css';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [query, setQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
 
   return (
     <Box component='nav' py={2}>
@@ -41,7 +41,7 @@ const Header = () => {
                 onChange={(e) => setQuery(e.target.value)}
               />
 
-              <IconButton>
+              <IconButton component={Link} to='/cart'>
                 <ShoppingCart color='#e6e6e6' />
               </IconButton>
 
@@ -52,7 +52,6 @@ const Header = () => {
             {query && (
               <ProductSearchBar
                 query={query}
-                onSearchResults={setSearchResults}
               />
             )}
           </Grid>
@@ -70,7 +69,7 @@ const Header = () => {
           </Grid>
 
           <Grid order={1} xs={1.5} sm={1} md={0.8}>
-            <Typography color='#fff' fontSize={26} fontFamily='Timing'>ER</Typography>
+            <Typography component={Link} to='/' color='#fff' fontSize={26} fontFamily='Timing'>ER</Typography>
           </Grid>
         </Grid>
       </Container>

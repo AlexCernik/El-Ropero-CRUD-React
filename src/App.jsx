@@ -19,6 +19,7 @@ import VerifyAccount from './screens/verifyAccount/VerifyAccount';
 import PurchaseList from './screens/purchaseList/PurchaseList';
 import PurchaseDetail from './screens/purchaseDetail/PurchaseDetail';
 import AddressForm from './screens/addressForm/AddressForm';
+import Cart from './screens/cart/Cart';
 
 const router = createBrowserRouter([
   {
@@ -85,12 +86,16 @@ const router = createBrowserRouter([
     element: <ProtectedRouter children={<PurchaseDetail />} redirectPath='/signin' />,
     errorElement: <ErrorPage />
   },
-
   {
-    path: 'add-address',
+    path: 'address',
     element: <ProtectedRouter children={<AddressForm />} redirectPath='/signin' />,
     errorElement: <ErrorPage />,
-  }
+  },
+  {
+    path: 'cart',
+    element: <ProtectedRouter children={<Cart />} redirectPath='/signin' />,
+    errorElement: <ErrorPage />,
+  },
   
 ]);
 

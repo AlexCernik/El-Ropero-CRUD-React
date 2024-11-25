@@ -3,11 +3,9 @@ import { useForm, Controller } from 'react-hook-form';
 import { Button, TextField, Grid, Typography } from '@mui/material';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [registered, setRegistered] = useState();
-  const navigate = useNavigate();
 
   const { control, handleSubmit, formState: { errors, isSubmitting }, getValues, setError } = useForm({
     defaultValues: {

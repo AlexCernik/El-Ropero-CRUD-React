@@ -90,10 +90,10 @@ const Login = () => {
                 {isSubmitting ? 'Iniciando sesión' : 'Iniciar sesión'}
               </Button>
             </form>
-              <div class="register-link">
+              <div className="register-link">
                 <a href="/signup">¿No tienes una cuenta? Regístrate</a>
               </div>
-              <div class="register-link">
+              <div className="register-link">
                 <a href="/send-reset-password">¿Has olvidado tu contraseña?</a>
               </div>
           </div>

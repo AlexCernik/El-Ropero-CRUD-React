@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Typography, List, ListItem } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const FrequentAsks = () => {
-  const navigate = useNavigate();
   const [state, setState] = useState([]);
   const [loading, setLoading] = useState(true);
 
